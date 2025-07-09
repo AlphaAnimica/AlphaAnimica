@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { User, Phone, MapPin, GraduationCap, Briefcase, Upload } from 'lucide-react';
 
-const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 const TraineeProfileView = () => {
   const { id } = useParams();

@@ -5,6 +5,8 @@ import { FileText, Calendar, MapPin, CheckCircle, XCircle, Clock } from 'lucide-
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 const Applications = () => {
   const { user } = useAuth();
   const [applications, setApplications] = useState([]);
@@ -180,7 +182,7 @@ const Applications = () => {
                   {application.resume_path && (
                     <div className="mb-4">
                       <a
-                        href={`http://localhost:5000/${application.resume_path}`}
+                        href={`${BASE_URL}/${application.resume_path}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-primary-600 hover:text-primary-700 text-sm font-medium flex items-center"

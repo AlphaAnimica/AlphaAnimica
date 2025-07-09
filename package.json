@@ -1,24 +1,4 @@
 {
-<<<<<<< HEAD
-  "name": "vet-trainee-platform",
-  "version": "1.0.0",
-  "description": "A platform connecting vet trainees with clinic owners and doctors",
-  "main": "server/index.js",
-  "scripts": {
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "cd server && npm run dev",
-    "client": "cd client && npm start",
-    "build": "cd client && npm run build",
-    "install-all": "npm install && cd server && npm install && cd ../client && npm install"
-  },
-  "keywords": ["veterinary", "trainee", "clinic", "internship"],
-  "author": "Your Name",
-  "license": "MIT",
-  "devDependencies": {
-    "concurrently": "^8.2.2"
-  }
-} 
-=======
   "name": "vet-platform-client",
   "version": "0.1.0",
   "private": true,
@@ -69,4 +49,3 @@
   },
   "proxy": "http://localhost:5000"
 }
->>>>>>> c4c90548b6d4b79493a8a2cbdc2384f195f9b635

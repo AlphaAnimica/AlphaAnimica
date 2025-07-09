@@ -4,7 +4,7 @@ import axios from 'axios';
 import { User, Phone, MapPin, GraduationCap, Briefcase, Building, Globe, Upload, Trash2, ImageIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
 
-const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 const Profile = () => {
   const { user } = useAuth();
@@ -31,8 +31,8 @@ const Profile = () => {
         try {
           setReviewLoading(true);
           const [reviewsRes, statsRes] = await Promise.all([
-            axios.get(`/api/clinic/${user.id}/reviews`),
-            axios.get(`/api/clinic/${user.id}/rating-stats`)
+            axios.get(`${BASE_URL}/api/clinic/${user.id}/reviews`),
+            axios.get(`${BASE_URL}/api/clinic/${user.id}/rating-stats`)
           ]);
           setReviews(reviewsRes.data);
           setRatingStats(statsRes.data);
@@ -49,13 +49,13 @@ const Profile = () => {
 
   useEffect(() => {
     if (user.userType === 'clinic') {
-      axios.get(`/api/clinic/${user.id}/photos`).then(res => setPhotos(res.data)).catch(() => setPhotos([]));
+      axios.get(`${BASE_URL}/api/clinic/${user.id}/photos`).then(res => setPhotos(res.data)).catch(() => setPhotos([]));
     }
   }, [user.id, loading, user.userType]);
 
   const fetchProfile = async () => {
     try {
-      const endpoint = user.userType === 'trainee' ? '/api/trainee/profile' : '/api/clinic/profile';
+      const endpoint = user.userType === 'trainee' ? `${BASE_URL}/api/trainee/profile` : `${BASE_URL}/api/clinic/profile`;
       const response = await axios.get(endpoint);
       setProfile(response.data);
       setFormData(response.data);
@@ -85,7 +85,7 @@ const Profile = () => {
     setSaving(true);
 
     try {
-      const endpoint = user.userType === 'trainee' ? '/api/trainee/profile' : '/api/clinic/profile';
+      const endpoint = user.userType === 'trainee' ? `${BASE_URL}/api/trainee/profile` : `${BASE_URL}/api/clinic/profile`;
       const formDataToSend = new FormData();
 
       Object.entries(formData).forEach(([key, value]) => {
@@ -123,9 +123,9 @@ const Profile = () => {
     const formData = new FormData();
     pendingPhotos.forEach(file => formData.append('photos', file));
     try {
-      await axios.post('/api/clinic/photos', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+      await axios.post(`${BASE_URL}/api/clinic/photos`, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
       toast.success('Photos uploaded!');
-      const res = await axios.get(`/api/clinic/${user.id}/photos`);
+      const res = await axios.get(`${BASE_URL}/api/clinic/${user.id}/photos`);
       setPhotos(res.data);
       setPendingPhotos([]);
       setPhotosChanged(false);
@@ -144,7 +144,7 @@ const Profile = () => {
   const handleDeletePhoto = async (photoId) => {
     if (!window.confirm('Delete this photo?')) return;
     try {
-      await axios.delete(`/api/clinic/photos/${photoId}`);
+      await axios.delete(`${BASE_URL}/api/clinic/photos/${photoId}`);
       setPhotos(photos.filter(p => p.id !== photoId));
       toast.success('Photo deleted');
     } catch (err) {
@@ -507,7 +507,7 @@ const Profile = () => {
               onClick={async () => {
                 if (window.confirm('Are you sure you want to delete your profile? This action cannot be undone.')) {
                   try {
-                    await axios.delete('/api/profile');
+                    await axios.delete(`${BASE_URL}/api/profile`);
                     toast.success('Profile deleted. Goodbye!');
                     if (window.localStorage) window.localStorage.clear();
                     window.location.href = '/';

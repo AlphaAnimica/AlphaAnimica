@@ -5,7 +5,7 @@ import { Building, Phone, MapPin, Globe, Star, MessageSquare, Image as ImageIcon
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const BASE_URL = process.env.REACT_APP_API_URL;
 
 const ClinicProfileView = () => {
   const { id } = useParams();
@@ -25,16 +25,16 @@ const ClinicProfileView = () => {
 
   useEffect(() => {
     fetchClinicData();
-    axios.get(`/api/clinic/${id}/photos`).then(res => setPhotos(res.data)).catch(() => setPhotos([]));
+    axios.get(`${BASE_URL}/api/clinic/${id}/photos`).then(res => setPhotos(res.data)).catch(() => setPhotos([]));
   }, [id]);
 
   const fetchClinicData = async () => {
     try {
       setLoading(true);
       const [profileRes, reviewsRes, statsRes] = await Promise.all([
-        axios.get(`/api/clinic/profile/${id}`),
-        axios.get(`/api/clinic/${id}/reviews`),
-        axios.get(`/api/clinic/${id}/rating-stats`)
+        axios.get(`${BASE_URL}/api/clinic/profile/${id}`),
+        axios.get(`${BASE_URL}/api/clinic/${id}/reviews`),
+        axios.get(`${BASE_URL}/api/clinic/${id}/rating-stats`)
       ]);
       
       setProfile(profileRes.data);
@@ -56,7 +56,7 @@ const ClinicProfileView = () => {
 
     setSubmittingReview(true);
     try {
-      await axios.post(`/api/clinic/${id}/review`, reviewForm);
+      await axios.post(`${BASE_URL}/api/clinic/${id}/review`, reviewForm);
       toast.success('Review submitted successfully!');
       setShowReviewForm(false);
       setReviewForm({ rating: 5, feedback: '' });
@@ -74,7 +74,7 @@ const ClinicProfileView = () => {
     }
 
     try {
-      await axios.delete(`/api/clinic/${id}/review/${reviewId}`);
+      await axios.delete(`${BASE_URL}/api/clinic/${id}/review/${reviewId}`);
       toast.success('Review deleted successfully!');
       fetchClinicData(); // Refresh data
     } catch (err) {
