@@ -27,7 +27,7 @@ const Navbar = () => {
       { name: 'Reviews', href: '/admin?tab=reviews', key: 'reviews', icon: List },
       { name: 'Profiles', href: '/admin?tab=profiles', key: 'profiles', icon: User },
       { name: 'Subscriptions', href: '/admin?tab=subs', key: 'subs', icon: Gift },
-    ];
+  ];
   } else if (user?.userType === 'clinic') {
     navItems.push({ name: 'Dashboard', href: '/dashboard', icon: Home });
     navItems.splice(1, 0, { name: 'Create Opportunity', href: '/create-opportunity', icon: Briefcase });
@@ -68,13 +68,13 @@ const Navbar = () => {
                   ))
                 ) : (
                   navItems.map((item) => (
-                    <Link
-                      key={item.name}
-                      to={item.href}
-                      className="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                    >
-                      {item.name}
-                    </Link>
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="text-gray-700 hover:text-primary-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  >
+                    {item.name}
+                  </Link>
                   ))
                 )}
               </div>
